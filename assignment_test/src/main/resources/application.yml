@@ -1,0 +1,81 @@
+spring:
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: false
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+        allow_update_outside_transaction: true
+  datasource:
+    url: jdbc:mysql:aurora//localhost:3306/airbridge?useSSL=false&useMysqlMetadata=true&createDatabaseIfNotExist=true&useUnicode=yes&characterEncoding=UTF-8&serverTimezone=UTC&maxAllowedPacket=134217728
+    username: root
+    password: song
+    driver-class-name: org.mariadb.jdbc.Driver
+  elasticsearch:
+    rest:
+      uris: http://localhost:9200
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: test
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: foo
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+      retries: 3
+      enable-idempotence: true
+  main:
+    allow-bean-definition-overriding: true
+
+server:
+  port: 6600
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+        validation: DEBUG
+      hibernate:
+        SQL: debug
+        validator: DEBUG
+        
+app:
+  security:
+    permit-all:
+      urls:
+        - /users/signup
+        - /users/validator
+        - /users/signin
+        - /users/refresh
+        - /v3/api-docs/**
+        - /swagger-ui/**
+        - /swagger-ui.html
+        - /reactive/**
+        - /test/**
+    publicOpenApi: /users/signup,
+      /users/signin,
+      /users/signup,
+      /users/signup,
+      
+jwt:
+  secret: secretJwtAirbridge20251321123212321aaaa
