@@ -1,0 +1,9 @@
+## local-path-provisioner CSI 드라이버를 클러스터에 설치
+매니페스트 적용
+kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.31/deploy/local-path-storage.yaml
+
+배포상태 확인
+kubectl -n local-path-storage get pods
+
+스토리지클래스 확인
+kubectl get storageclass

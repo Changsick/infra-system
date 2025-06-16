@@ -1,0 +1,39 @@
+# 전역 설정 -----------------------------------------------------
+global:
+  # Docker Desktop에 이미 기본 StorageClass(local-path 등)가 있다면 생략 가능
+  storageClass: local-path
+
+# 인증 ---------------------------------------------------------
+auth:
+  postgresPassword: "postgres"   # postgres 슈퍼유저
+  username: postgres                     # 애플리케이션용 사용자
+  password: postgres
+  database: song
+
+# 프라이머리(싱글) ------------------------------------------------
+primary:
+  persistence:
+    enabled: true
+    size: 20Gi              # PVC 용량
+    storageClass: local-path
+    # 기존 PVC 재사용 시
+    existingClaim: pgdata-pvc
+  service:
+    type: NodePort
+    nodePorts:
+      postgresql: 30007
+  podSecurityContext:
+    fsGroup: 1001           # 비트나미 이미지 권장값
+
+volumePermissions:
+  enabled: true            # root 권한 init 컨테이너가 chown/chmod 수행
+  securityContext:
+    runAsUser: 0           # (기본값 0) 실제 파일 권한 변경을 위해 root 사용
+
+# 리소스(선택) ---------------------------------------------------
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 250m
+  limits:
+    memory: 1Gi

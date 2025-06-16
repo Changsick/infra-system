@@ -1,0 +1,7 @@
+kubectl create -f .\song-test.yaml
+
+kubectl get namespace -A
+
+kubectl get namespace song-test
+
+## kubectl delete namespace song-test

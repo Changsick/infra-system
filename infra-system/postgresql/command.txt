@@ -1,0 +1,41 @@
+
+## 차트 저장소 추가·업데이트
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+
+# 최신 chart 버전을 로컬로 다운로드(OCI 사용 예)
+helm pull oci://registry-1.docker.io/bitnamicharts/postgresql --untar
+
+# 결과
+postgresql/
+├── Chart.yaml
+├── values.yaml          # 기본 설정 (4 천 여 라인) :contentReference[oaicite:1]{index=1}
+├── templates/           # StatefulSet, Service, PVC, Secret 등 쿠버네티스 매니페스트
+└── README.md            # 매개변수 설명(Artifact Hub에서도 동일)
+
+오버라이드 chart 작성 : postgresql-values.yaml
+
+pv-pvc 적용
+kubectl apply -f pv-pvc.yaml
+kubectl get pvc -n song-test pgdata-pvc   # STATUS 가 Bound 인지 확인
+kubectl describe pvc pgdata-pvc -n song-test
+
+helm 적용
+helm install mypg bitnami/postgresql -n song-test -f postgresql-values.yaml
+
+삭제 후 재적용
+helm uninstall mypg -n song-test
+helm install mypg bitnami/postgresql -n song-test -f postgresql-values.yaml
+
+확인
+kubectl get pods -n song-test
+
+파드 이벤트로그
+kubectl describe pod mypg-postgresql-0 -n song-test
+
+서비스 확인
+kubectl -n song-test get svc mypg-postgresql
+
+
+intellij 접속 : 아래 명령어에 나온 ip + NodePorts(30007)
+kubectl get nodes -o wide
