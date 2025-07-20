@@ -1,0 +1,18 @@
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+
+# helm repo에서 mysql values 가져오기
+helm show values bitnami/mysql > values.yaml
+
+# pv-pvc 생성
+kubectl -n song-test apply -f pv-pvc.yaml
+
+# pv-pvc 확인
+kubectl -n song-test get pv mysql-share-pv
+kubectl -n song-test get pvc mysql-share-pvc
+
+# mysql helm 배포
+# 최초 설치
+helm install mysql-3306 bitnami/mysql --namespace song-test -f mysql-values.yaml
+helm upgrade mysql-3306 bitnami/mysql --namespace song-test -f mysql-values.yaml
+helm delete mysql-3306 -n song-test

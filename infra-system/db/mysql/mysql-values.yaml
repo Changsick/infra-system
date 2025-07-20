@@ -1,0 +1,28 @@
+auth:
+  rootPassword: "song"    # 실환경은 Secret 사용 권장
+  username: "song"
+  password: "song"
+  database: "test-song"
+
+primary:
+  persistence:
+    enabled: true
+    existingClaim: mysql-share-pvc
+    # storageClass: "-"
+
+volumePermissions:
+  enabled: true
+
+# 복제 필요 없으면 아래 두 블록 삭제 가능
+secondary:
+  enabled: false
+
+service:
+  type: NodePort
+  ports:
+    mysql: 3306
+  nodePorts:
+    mysql: 30306
+
+metrics:
+  enabled: true
