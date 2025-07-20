@@ -9,6 +9,12 @@ primary:
     enabled: true
     existingClaim: mysql-share-pvc
     # storageClass: "-"
+  service:
+    type: NodePort
+    ports:
+      mysql: 3306
+    nodePorts:
+      mysql: 30306
 
 volumePermissions:
   enabled: true
@@ -16,13 +22,6 @@ volumePermissions:
 # 복제 필요 없으면 아래 두 블록 삭제 가능
 secondary:
   enabled: false
-
-service:
-  type: NodePort
-  ports:
-    mysql: 3306
-  nodePorts:
-    mysql: 30306
 
 metrics:
   enabled: true
