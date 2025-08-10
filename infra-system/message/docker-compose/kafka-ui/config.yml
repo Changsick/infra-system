@@ -1,0 +1,11 @@
+kafka:
+  clusters:
+    - name: helm-kafka
+      bootstrapServers: "192.168.64.2:31003"
+      properties:
+        "security.protocol": "SASL_PLAINTEXT"
+        "sasl.mechanism": "SCRAM-SHA-512"
+        "sasl.jaas.config": "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"song\" password=\"song1234!\";"
+        "max.request.size": "20000000"
+        "buffer.memory": "33554432"
+        "fetch.max.bytes": "20000000"

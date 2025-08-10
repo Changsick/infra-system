@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  kafka-ui:
+    container_name: kafka-ui
+    image: provectuslabs/kafka-ui:latest
+    ports:
+      - 9001:8080
+    environment:
+      DYNAMIC_CONFIG_ENABLED: true
+      WEBCLIENT_MAX_IN_MEMORY_BUFFER_SIZE: "50MB"
+      SPRING_CODEC_MAX_IN_MEMORY_SIZE: "50MB"
+      SPRING_HTTP_CODECS_MAX_IN_MEMORY_SIZE: "50MB"
+    volumes:
+      - ./kafka-ui/config.yml:/etc/kafkaui/dynamic_config.yaml

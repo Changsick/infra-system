@@ -1,0 +1,16 @@
+# custom.yaml (필요한 항목만)
+hostname: "rancher.192.168.64.2.sslip.io"
+ingress:
+  tls:
+    source: secret
+    secretName: tls-rancher-ingress
+privateCA: false
+bootstrapPassword: "songsong"
+
+
+# 리소스/레플리카 등
+replicas: 3
+resources:
+  requests:
+    cpu: "200m"
+    memory: "512Mi"

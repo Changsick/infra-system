@@ -1,0 +1,9 @@
+helm show values bitnami/kafka --version 32.1.3 > values.yaml
+helm uninstall kafka -n message
+helm install kafka bitnami/kafka -n message --version 32.1.3 -f kafka-values.yaml
+helm upgrade kafka bitnami/kafka -n message --version 32.1.3 -f kafka-values.yaml
+
+
+# pv-pvc 확인
+kubectl get pv kafka-share-pv
+kubectl -n message get pvc kafka-share-pvc

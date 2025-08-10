@@ -1,0 +1,36 @@
+controller:
+  replicaCount: 1
+  overrideConfiguration:
+    message.max.bytes: 20000000
+    replica.fetch.max.bytes: 25000000
+  heapOpts: -Xmx4096m -Xms2048m
+  resources:
+    requests:
+      cpu: 2
+      memory: 2Gi
+    limits:
+      cpu: 4
+      memory: 4Gi
+  persistence:
+    enabled: true
+    existingClaim: kafka-share-pvc
+    size: 8Gi
+  logPersistence:
+    enabled: false
+#    existingClaim: kafka-share-pvc
+#    size: 15Gi
+externalAccess:
+  enabled: true
+  controller:
+    service:
+      type: NodePort
+      nodePorts:
+        - 31003
+      useHostIPs: true
+sasl:
+  client:
+    users:
+      - song
+    passwords:
+      - song1234!
+
